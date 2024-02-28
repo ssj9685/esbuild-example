@@ -1,4 +1,4 @@
-import React, { Suspense } from "react";
+import React from "react";
 import { renderToPipeableStream } from "react-dom/server";
 import App from "./app.jsx";
 import { createReadStream } from "fs";
@@ -24,4 +24,4 @@ const server = createServer(async (req, res) => {
   stream.pipe(res);
 });
 
-server.listen(8080);
+server.listen(3000);
