@@ -1,16 +1,27 @@
-import React from "react";
+import React, { Suspense } from "react";
 import { renderToPipeableStream } from "react-dom/server";
 import App from "./app.jsx";
+import { createReadStream } from "fs";
+import { createServer } from "http";
 
-const http = require("http");
+const server = createServer(async (req, res) => {
+  if (req.url !== "/") {
+    try {
+      const stream = createReadStream(`.${req.url}`);
+      stream.pipe(res);
+    } catch (e) {
+      res.end();
+    }
 
-const server = http.createServer(async (req, res) => {
+    return;
+  }
+
   const stream = renderToPipeableStream(<App />, {
-    bootstrapScripts: ["/main.js"],
+    bootstrapScripts: ["client.js"],
   });
 
   res.setHeader("content-type", "text/html");
   stream.pipe(res);
 });
 
-server.listen(3000);
+server.listen(8080);

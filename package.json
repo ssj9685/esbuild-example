@@ -1,1 +1,13 @@
-{ "dependencies": { "esbuild": "^0.20.1", "react": "^18.2.0", "react-dom": "^18.2.0" } }
+{
+  "scripts": {
+    "start": "bun run build:pipe && bun server.js",
+    "build:pipe": "bun run build:client && bun run build:server",
+    "build:client": "./node_modules/esbuild/bin/esbuild client.jsx --outfile=client.js --bundle --minify",
+    "build:server": "./node_modules/esbuild/bin/esbuild server.jsx --outfile=server.js --bundle --platform=node"
+  },
+  "dependencies": {
+    "esbuild": "^0.20.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  }
+}
