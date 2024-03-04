@@ -1,5 +1,7 @@
-import React from "react";
 import { hydrateRoot } from "react-dom/client";
-import App from "./app.jsx";
+import { parseJSX } from "./util.js";
 
-hydrateRoot(document, <App />);
+hydrateRoot(
+  document,
+  JSON.parse(window.__INITIAL_CLIENT_JSX_STRING__, parseJSX)
+);

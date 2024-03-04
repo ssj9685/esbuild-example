@@ -1,6 +1,9 @@
 import React from "react";
+import { readFile } from "fs/promises";
 
-function App() {
+async function App() {
+  const contents = await readFile("./test.txt", "utf8");
+
   return (
     <html>
       <head></head>
@@ -10,7 +13,7 @@ function App() {
             console.log("test");
           }}
         >
-          Hello, world!
+          {contents}
         </h1>
       </body>
     </html>
