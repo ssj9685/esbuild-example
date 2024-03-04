@@ -9,8 +9,7 @@ const server = createServer(async (req, res) => {
   const url = new URL(req.url ?? "", `http://${req.headers.host}`);
 
   if (url.searchParams.has("jsx")) {
-    // TODO: Render condition from url params
-    const clientJSX = await renderJSXToClientJSX(<App />);
+    const clientJSX = await renderJSXToClientJSX(<App slug={url.pathname} />);
     const clientJSXString = JSON.stringify(clientJSX, stringifyJSX);
     res.setHeader("Content-Type", "application/json");
     res.end(clientJSXString);
@@ -31,7 +30,8 @@ const server = createServer(async (req, res) => {
     return;
   }
 
-  const response = await fetch("http://localhost:3000?jsx");
+  const call = url.pathname === "/" ? "/test" : url.pathname;
+  const response = await fetch(`http://localhost:3000${call}?jsx`);
 
   if (!response.ok) {
     res.statusCode = response.status;
